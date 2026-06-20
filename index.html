@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Be Mine ❤️</title>
+
+<style>
+body {
+    margin: 0;
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(135deg, #ff9a9e, #fecfef);
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: 0.2s;
+}
+
+/* Shake Effect */
+.shake {
+    animation: shakeAnim 0.3s;
+}
+
+@keyframes shakeAnim {
+    0% { transform: translate(0px, 0px); }
+    25% { transform: translate(-5px, 5px); }
+    50% { transform: translate(5px, -5px); }
+    75% { transform: translate(-5px, -5px); }
+    100% { transform: translate(0px, 0px); }
+}
+
+/* Floating hearts */
+.heart {
+    position: absolute;
+    color: rgba(255,255,255,0.6);
+    animation: float 6s linear infinite;
+}
+
+@keyframes float {
+    0% { transform: translateY(100vh) scale(1); }
+    100% { transform: translateY(-10vh) scale(1.5); }
+}
+
+.container {
+    position: relative;
+    z-index: 2;
+}
+
+h1 {
+    font-size: 2rem;
+    color: white;
+    margin-bottom: 30px;
+}
+
+.buttons {
+    position: relative;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 18px;
+    border: none;
+    border-radius: 50px;
+    cursor: pointer;
+    margin: 10px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 5;
+}
+
+#yesBtn {
+    background: #ff4d6d;
+    color: white;
+}
+
+#noBtn {
+    background: white;
+    color: #ff4d6d;
+}
+
+.message {
+    margin-top: 20px;
+    color: white;
+    font-size: 1.5rem;
+    font-weight: bold;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+.sticker-area img {
+    position: fixed;
+    width: 120px;
+    animation: pop 0.4s ease;
+    pointer-events: none;
+}
+
+@keyframes pop {
+    from { transform: scale(0); opacity: 0; }
+    to { transform: scale(1); opacity: 1; }
+}
+
+/* Success screen */
+.success {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: #ff4d6d;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    z-index: 9999;
+}
+
+.success div {
+    color: white;
+    font-size: 2rem;
+    margin-bottom: 20px;
+    z-index: 10000;
+}
+
+.success img {
+    width: 300px;
+    max-width: 80%;
+    border-radius: 20px;
+    z-index: 10000;
+    position: relative;
+}
+
+/* Confetti */
+.confetti {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    opacity: 0.8;
+    border-radius: 50%;
+    pointer-events: none;
+    animation: fall 3s linear forwards;
+}
+
+@keyframes fall {
+    0% { transform: translateY(0) rotate(0deg); }
+    100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+}
+</style>
+</head>
+
+<body>
+
+<audio id="bgMusic" loop>
+  <source src="Kavkaz.mp3" type="audio/mpeg">
+  Your browser does not support the audio element.
+</audio>
+
+<div class="container">
+    <h1 id="mainQuestion">"I don't want to be a chapter in your life. I don't want to be a memory you visit sometimes. I want to be the person beside you when new chapters begin. Will you u accept me as your other part?" ? 💖</h1>
+
+    <div class="buttons">
+        <button id="yesBtn">Yes 💗</button>
+        <button id="noBtn">No 💔</button>
+    </div>
+
+    <div class="message" id="funnyText"></div>
+
+    <div class="success" id="successBox">
+        <div>Merci de m’avoir choisi. Il y a quelque chose que j’aimerais que tu saches.
+
+Je ne suis pas parfait. Je porte en moi beaucoup de choses qui ne sont pas faciles à vivre. Certains jours, je réfléchis trop, certains jours je lutte avec moi-même. Je m’effondre plus souvent que je ne le voudrais, et mes problèmes de mémoire peuvent parfois compliquer les choses. Il y a des moments où j’oublie pourquoi je souffre, mais la douleur reste. Il peut y avoir des moments où je suis difficile à comprendre, des moments où je fais des erreurs, ou des moments où j’ai besoin de plus de patience que la plupart des gens.
+
+Je ne te dis pas cela pour te repousser. Je te le dis parce que, si nous décidons de partager cette histoire ensemble, je veux être honnête avec toi dès le début.
+
+Je ne peux pas promettre que m’aimer sera toujours facile. Mais je peux promettre que chaque version de moi, même celle qui est perdue, brisée ou confuse, fera toujours de son mieux pour prendre soin de toi.
+
+Et si, en sachant tout cela, tu choisis quand même de rester, alors je serai reconnaissant pour chaque moment que nous partagerons ensemble.
+
+Et si un jour tu changes d’avis, j’accepterai ton choix sans ressentiment. Tout ce que nous avons partagé aura toujours de la valeur pour moi, et je serai toujours reconnaissant que, pendant un moment, tu m’aies choisi.
+ ❤️</div>
+        <img src="happy.png">
+    </div>
+
+    <div class="sticker-area" id="stickerArea"></div>
+</div>
+
+<script>
+let yesBtn = document.getElementById("yesBtn");
+let noBtn = document.getElementById("noBtn");
+let funnyText = document.getElementById("funnyText");
+let mainQuestion = document.getElementById("mainQuestion");
+let buttons = document.querySelector(".buttons");
+let successBox = document.getElementById("successBox");
+let stickerArea = document.getElementById("stickerArea");
+let body = document.body;
+let bgMusic = document.getElementById("bgMusic");
+
+let scale = 1;
+let noScale = 1;
+let textOffset = 0;
+
+let messages = [
+    "Are you sure? 🥺",
+    "Think again…",
+    "I will cry 😢",
+    "Why why 💔",
+    "pleaseeeee "
+];
+
+let sadStickers = [
+    "sad1.png",
+    "sad2.png",
+    "sad3.png",
+    "sad4.png"
+];
+
+let index = 0;
+
+// No button behavior
+noBtn.addEventListener("click", function() {
+    body.classList.add("shake");
+    setTimeout(() => body.classList.remove("shake"), 300);
+
+    scale += 0.4;
+    noScale -= 0.05;
+    textOffset += 15;
+
+    if (scale >= 8) {
+        yesBtn.style.position = "fixed";
+        yesBtn.style.top = "0";
+        yesBtn.style.left = "0";
+        yesBtn.style.width = "100vw";
+        yesBtn.style.height = "100vh";
+        yesBtn.style.borderRadius = "0";
+        yesBtn.style.fontSize = "3rem";
+    } else {
+        yesBtn.style.transform = `scale(${scale})`;
+    }
+
+    noBtn.style.transform = `scale(${noScale})`;
+
+    funnyText.innerText = messages[index % messages.length];
+    funnyText.style.top = textOffset + "px";
+    index++;
+
+    spawnRandomSticker();
+
+    let maxX = window.innerWidth - noBtn.offsetWidth;
+    let maxY = window.innerHeight - noBtn.offsetHeight;
+
+    noBtn.style.position = "fixed";
+    noBtn.style.left = Math.random() * maxX + "px";
+    noBtn.style.top = Math.random() * maxY + "px";
+});
+
+// Yes button behavior
+yesBtn.addEventListener("click", function() {
+    bgMusic.play().catch(e => console.log("Autoplay blocked"));
+
+    mainQuestion.style.display = "none";
+    buttons.style.display = "none";
+    funnyText.style.display = "none";
+    stickerArea.innerHTML = "";
+
+    successBox.style.display = "flex";
+
+    startConfetti();
+    spawnHearts();
+});
+
+// Confetti مستمرة
+function startConfetti() {
+    setInterval(() => {
+        let conf = document.createElement("div");
+        conf.classList.add("confetti");
+        conf.style.top = Math.random() * window.innerHeight + "px";
+        conf.style.left = Math.random() * window.innerWidth + "px";
+        conf.style.background = randomColor();
+        conf.style.zIndex = 9999;
+        successBox.appendChild(conf);
+        setTimeout(() => conf.remove(), 5000);
+    }, 100);
+}
+
+// ألوان عشوائية للكونفيتي
+function randomColor() {
+    const colors = ["#ffffff", "#ffeb3b", "#ff5722", "#ff4d6d", "#4fc3f7"];
+    return colors[Math.floor(Math.random() * colors.length)];
+}
+
+// Floating hearts
+function spawnHearts() {
+    setInterval(() => {
+        let heart = document.createElement("div");
+        heart.classList.add("heart");
+        heart.innerHTML = "❤️";
+        heart.style.left = Math.random() * 100 + "vw";
+        heart.style.fontSize = Math.random() * 20 + 15 + "px";
+        heart.style.zIndex = 9998;
+        successBox.appendChild(heart);
+        setTimeout(() => heart.remove(), 6000);
+    }, 200);
+}
+
+// Sad stickers
+function spawnRandomSticker() {
+    let img = document.createElement("img");
+    img.src = sadStickers[Math.floor(Math.random() * sadStickers.length)];
+    img.style.left = Math.random() * (window.innerWidth - 150) + "px";
+    img.style.top = Math.random() * (window.innerHeight - 150) + "px";
+    stickerArea.appendChild(img);
+}
+</script>
+
+</body>
+</html>
